@@ -1,0 +1,11 @@
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\GoogleScholarParser.exe.config
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\GoogleScholarParser.exe
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\GoogleScholarParser.pdb
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\HtmlAgilityPack.dll
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\HtmlAgilityPack.pdb
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Release\HtmlAgilityPack.xml
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Release\GoogleScholarParser.Form1.resources
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Release\GoogleScholarParser.Properties.Resources.resources
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Release\GoogleScholarParser.csproj.GenerateResource.Cache
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Release\GoogleScholarParser.exe
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Release\GoogleScholarParser.pdb

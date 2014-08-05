@@ -1,0 +1,25 @@
+c:\users\vlad\documents\visual studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.exe.config
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.exe
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.pdb
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\HtmlAgilityPack.dll
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\bin\Debug\HtmlAgilityPack.xml
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.Properties.Resources.resources
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.csproj.GenerateResource.Cache
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.exe
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.pdb
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.csprojResolveAssemblyReference.cache
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.CaptchaForm.resources
+C:\Users\VLAD\Documents\Visual Studio 2012\Projects\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.MainForm.resources
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.exe.config
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.exe
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.pdb
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.exe
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\GoogleScholarParser.pdb
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\HtmlAgilityPack.pdb
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\HtmlAgilityPack.xml
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.csprojResolveAssemblyReference.cache
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.CaptchaForm.resources
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.MainForm.resources
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.Properties.Resources.resources
+D:\Git\GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.csproj.GenerateResource.Cache
