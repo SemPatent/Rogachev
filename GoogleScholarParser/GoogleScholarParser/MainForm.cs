@@ -12,6 +12,7 @@ using System.Net;
 using System.IO;
 using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
+using MySql.Data.MySqlClient;
 
 namespace GoogleScholarParser
 {
@@ -35,7 +36,20 @@ namespace GoogleScholarParser
             threadParse.Start();
 
             File.Delete("log.html");
-            File.Delete("log.txt");
+        }
+
+        private void checkBoxCount_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxCount.Checked)
+            {
+                labelCount.Enabled = false;
+                numericUpDownCount.Enabled = false;
+            }
+            else
+            {
+                labelCount.Enabled = true;
+                numericUpDownCount.Enabled = true;
+            }
         }
 
         private void Parse()
@@ -99,16 +113,19 @@ namespace GoogleScholarParser
                     }
                     count = int.Parse(b) / 10;
                 }
+                //запись
+                DataResults dataResults = new DataResults();
+
                 HtmlNodeCollection bodyNodeNames = doc.DocumentNode.SelectNodes("//h3[@class='gs_rt']");
-                HtmlNodeCollection bodyNodeAutors = doc.DocumentNode.SelectNodes("//div[@class='gs_a']");
+                HtmlNodeCollection bodyNodeDatas = doc.DocumentNode.SelectNodes("//div[@class='gs_a']");
                 string[] names = new string[bodyNodeNames.Count];
-                string[] autors = new string[bodyNodeAutors.Count];
+                Data[] data = new Data[bodyNodeDatas.Count];
                 for (int i = 0; i < bodyNodeNames.Count; i++)
                 {
                     names[i] = bodyNodeNames[i].InnerText;
-                    autors[i] = bodyNodeAutors[i].InnerText;
-                    File.AppendAllText("log.txt", names[i] + "\n" + autors[i] + "\n\n");
+                    data[i] = dataResults.GetData(bodyNodeDatas[i].InnerText);
                 }
+                SaveData(names, data);
             }
             catch
             {
@@ -132,10 +149,10 @@ namespace GoogleScholarParser
             {
                 File.WriteAllText("log.html", input, Encoding.Default);
             }
-            Captcha(captcha);
+            ParseCaptchaDocument(captcha);
         }
 
-        private void Captcha(string input)
+        private void ParseCaptchaDocument(string input)
         {
             try
             {
@@ -176,17 +193,34 @@ namespace GoogleScholarParser
             return url + "/scholar?start=" + (numb * 10).ToString() + "&q=" + req + "&btnG";
         }
 
-        private void checkBoxCount_CheckedChanged(object sender, EventArgs e)
+        private void SaveData(string[] names, Data[] data)
         {
-            if (checkBoxCount.Checked)
+            string conStr = "server=127.0.0.1;user=root;database=google_scholar;password=;";
+            using (MySqlConnection con = new MySqlConnection(conStr))
             {
-                labelCount.Enabled = false;
-                numericUpDownCount.Enabled = false;
-            }
-            else
-            {
-                labelCount.Enabled = true;
-                numericUpDownCount.Enabled = true;
+                try
+                {
+                    con.Open();
+                    File.Delete("log.txt");
+
+                    for (int i = 0; i < names.Length; i++)
+                    {
+                        File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
+                
+                        string sqlResults = "INSERT INTO results_table (id, name, autors, year, publishing) VALUES (null, @Name, @Autors, @Year, @Publishing);";
+                        MySqlCommand cmdResults = new MySqlCommand(sqlResults, con);
+                        //создаем параметры и добавляем их в коллекцию
+                        cmdResults.Parameters.AddWithValue("@Name", names[i]);
+                        cmdResults.Parameters.AddWithValue("@Autors", data[i].autors);
+                        cmdResults.Parameters.AddWithValue("@Year", data[i].year);
+                        cmdResults.Parameters.AddWithValue("@Publishing", data[i].publishing);
+                        cmdResults.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
