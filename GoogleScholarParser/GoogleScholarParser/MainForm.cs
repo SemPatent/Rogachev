@@ -13,6 +13,7 @@ using System.IO;
 using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace GoogleScholarParser
 {
@@ -25,7 +26,7 @@ namespace GoogleScholarParser
         public MainForm()
         {
             InitializeComponent();
-            listViewResult.Visible = false;
+            dataGridViewResults.Visible = false;
         }
 
         private void buttonFind_Click(object sender, EventArgs e)
@@ -50,6 +51,12 @@ namespace GoogleScholarParser
                 labelCount.Enabled = true;
                 numericUpDownCount.Enabled = true;
             }
+        }
+
+        private void toolStripMenuItemDatabaseSettings_Click(object sender, EventArgs e)
+        {
+            DatabaseSettingForm databaseSettingForm = new DatabaseSettingForm();
+            databaseSettingForm.ShowDialog();
         }
 
         private void Parse()
@@ -126,6 +133,7 @@ namespace GoogleScholarParser
                     data[i] = dataResults.GetData(bodyNodeDatas[i].InnerText);
                 }
                 SaveData(names, data);
+                WriteData(names, data);
             }
             catch
             {
@@ -162,7 +170,7 @@ namespace GoogleScholarParser
                 request.ContentType = @"text/html; charset=windows-1251";
                 request.Headers.Add(HttpRequestHeader.AcceptLanguage, @"ru-RU,ru;q=0.9,en;q=0.8");
                 WebResponse response = request.GetResponse();
-                toolStripStatusLabelResponse.Text = "Success Captcha";
+                toolStripStatusLabelResponse.Text = "Success";
 
                 Stream dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream, Encoding.Default);
@@ -172,7 +180,7 @@ namespace GoogleScholarParser
             }
             catch (WebException ex)
             {
-                toolStripStatusLabelResponse.Text = "Error Captcha";
+                toolStripStatusLabelResponse.Text = "Wrong Captcha";
                 Stream dataStream = ex.Response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream, Encoding.Default);
                 string responseFromServer = reader.ReadToEnd();
@@ -195,18 +203,18 @@ namespace GoogleScholarParser
 
         private void SaveData(string[] names, Data[] data)
         {
-            string conStr = "server=127.0.0.1;user=root;database=google_scholar;password=;";
+            string conStr = "server=" + ConfigurationManager.AppSettings["server"] + ";user=" + 
+                                        ConfigurationManager.AppSettings["user"] + ";database=" + 
+                                        ConfigurationManager.AppSettings["database"] + ";password=" +
+                                        ConfigurationManager.AppSettings["password"] + ";";
             using (MySqlConnection con = new MySqlConnection(conStr))
             {
                 try
                 {
                     con.Open();
-                    File.Delete("log.txt");
 
                     for (int i = 0; i < names.Length; i++)
                     {
-                        File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
-                
                         string sqlResults = "INSERT INTO results_table (id, name, autors, year, publishing) VALUES (null, @Name, @Autors, @Year, @Publishing);";
                         MySqlCommand cmdResults = new MySqlCommand(sqlResults, con);
                         //создаем параметры и добавляем их в коллекцию
@@ -221,6 +229,28 @@ namespace GoogleScholarParser
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private void WriteData(string[] names, Data[] data)
+        {
+            dataGridViewResults.Visible = true;
+            File.Delete("log.txt");
+
+            dataGridViewResults.Columns.Clear();
+            dataGridViewResults.Columns.Add("Name", "Name");
+            dataGridViewResults.Columns.Add("Autors", "Autors");
+            dataGridViewResults.Columns.Add("Year", "Year");
+            dataGridViewResults.Columns.Add("Publishing", "Publishing");
+            for (int i = 0; i < names.Length; i++)
+            {
+                File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
+
+                dataGridViewResults.Rows.Add();
+                dataGridViewResults.Rows[i].Cells[0].Value = names[i];
+                dataGridViewResults.Rows[i].Cells[1].Value = data[i].autors;
+                dataGridViewResults.Rows[i].Cells[2].Value = data[i].year;
+                dataGridViewResults.Rows[i].Cells[3].Value = data[i].publishing;
             }
         }
     }

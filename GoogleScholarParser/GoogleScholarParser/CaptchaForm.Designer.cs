@@ -36,15 +36,16 @@
             // 
             // pictureBoxCaptcha
             // 
+            this.pictureBoxCaptcha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBoxCaptcha.Location = new System.Drawing.Point(13, 13);
             this.pictureBoxCaptcha.Name = "pictureBoxCaptcha";
-            this.pictureBoxCaptcha.Size = new System.Drawing.Size(341, 140);
+            this.pictureBoxCaptcha.Size = new System.Drawing.Size(264, 104);
             this.pictureBoxCaptcha.TabIndex = 0;
             this.pictureBoxCaptcha.TabStop = false;
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(279, 159);
+            this.buttonOk.Location = new System.Drawing.Point(202, 123);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 1;
@@ -54,7 +55,7 @@
             // 
             // textBoxCaptcha
             // 
-            this.textBoxCaptcha.Location = new System.Drawing.Point(192, 161);
+            this.textBoxCaptcha.Location = new System.Drawing.Point(115, 125);
             this.textBoxCaptcha.Name = "textBoxCaptcha";
             this.textBoxCaptcha.Size = new System.Drawing.Size(81, 20);
             this.textBoxCaptcha.TabIndex = 2;
@@ -63,10 +64,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(366, 194);
+            this.ClientSize = new System.Drawing.Size(289, 158);
             this.Controls.Add(this.textBoxCaptcha);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.pictureBoxCaptcha);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "CaptchaForm";
             this.Text = "CaptchaForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCaptcha)).EndInit();
