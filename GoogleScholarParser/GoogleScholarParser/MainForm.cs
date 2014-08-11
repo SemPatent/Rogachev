@@ -26,7 +26,7 @@ namespace GoogleScholarParser
         public MainForm()
         {
             InitializeComponent();
-            dataGridViewResults.Visible = false;
+            //dataGridViewResults.Visible = false;
         }
 
         private void buttonFind_Click(object sender, EventArgs e)
@@ -36,7 +36,6 @@ namespace GoogleScholarParser
             Thread threadParse = new Thread(Parse);
             threadParse.Start();
 
-            File.Delete("log.html");
         }
 
         private void checkBoxCount_CheckedChanged(object sender, EventArgs e)
@@ -61,6 +60,8 @@ namespace GoogleScholarParser
 
         private void Parse()
         {
+            File.Delete("log.txt");
+            File.Delete("log.html");
             index = 0;
             count = 0;
             do
@@ -234,23 +235,22 @@ namespace GoogleScholarParser
 
         private void WriteData(string[] names, Data[] data)
         {
-            dataGridViewResults.Visible = true;
-            File.Delete("log.txt");
+            //dataGridViewResults.Visible = true;
 
-            dataGridViewResults.Columns.Clear();
-            dataGridViewResults.Columns.Add("Name", "Name");
-            dataGridViewResults.Columns.Add("Autors", "Autors");
-            dataGridViewResults.Columns.Add("Year", "Year");
-            dataGridViewResults.Columns.Add("Publishing", "Publishing");
+            //dataGridViewResults.Columns.Clear();
+            //dataGridViewResults.Columns.Add("Name", "Name");
+            //dataGridViewResults.Columns.Add("Autors", "Autors");
+            //dataGridViewResults.Columns.Add("Year", "Year");
+            //dataGridViewResults.Columns.Add("Publishing", "Publishing");
             for (int i = 0; i < names.Length; i++)
             {
                 File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
 
-                dataGridViewResults.Rows.Add();
-                dataGridViewResults.Rows[i].Cells[0].Value = names[i];
-                dataGridViewResults.Rows[i].Cells[1].Value = data[i].autors;
-                dataGridViewResults.Rows[i].Cells[2].Value = data[i].year;
-                dataGridViewResults.Rows[i].Cells[3].Value = data[i].publishing;
+                //dataGridViewResults.Rows.Add();
+                //dataGridViewResults.Rows[i].Cells[0].Value = names[i];
+                //dataGridViewResults.Rows[i].Cells[1].Value = data[i].autors;
+                //dataGridViewResults.Rows[i].Cells[2].Value = data[i].year;
+                //dataGridViewResults.Rows[i].Cells[3].Value = data[i].publishing;
             }
         }
     }

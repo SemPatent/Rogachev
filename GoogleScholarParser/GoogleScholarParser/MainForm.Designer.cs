@@ -37,11 +37,9 @@
             this.checkBoxCount = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItemDatabaseSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataGridViewResults = new System.Windows.Forms.DataGridView();
             this.statusStripResponse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResults)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxRequest
@@ -127,20 +125,11 @@
             this.toolStripMenuItemDatabaseSettings.Text = "Database Settings";
             this.toolStripMenuItemDatabaseSettings.Click += new System.EventHandler(this.toolStripMenuItemDatabaseSettings_Click);
             // 
-            // dataGridViewResults
-            // 
-            this.dataGridViewResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewResults.Location = new System.Drawing.Point(13, 54);
-            this.dataGridViewResults.Name = "dataGridViewResults";
-            this.dataGridViewResults.Size = new System.Drawing.Size(665, 183);
-            this.dataGridViewResults.TabIndex = 8;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 262);
-            this.Controls.Add(this.dataGridViewResults);
             this.Controls.Add(this.checkBoxCount);
             this.Controls.Add(this.labelCount);
             this.Controls.Add(this.numericUpDownCount);
@@ -156,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +161,5 @@
         private System.Windows.Forms.CheckBox checkBoxCount;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDatabaseSettings;
-        private System.Windows.Forms.DataGridView dataGridViewResults;
     }
 }
