@@ -22,20 +22,21 @@ namespace GoogleScholarParser
         private const string url = "https://scholar.google.com";
         private int index;
         private int count;
+        private int num;
+        private bool isError;
 
         public MainForm()
         {
             InitializeComponent();
-            //dataGridViewResults.Visible = false;
         }
 
         private void buttonFind_Click(object sender, EventArgs e)
         {
             toolStripStatusLabelResponse.Text = "";
+            isError = false;
 
             Thread threadParse = new Thread(Parse);
             threadParse.Start();
-
         }
 
         private void checkBoxCount_CheckedChanged(object sender, EventArgs e)
@@ -64,42 +65,26 @@ namespace GoogleScholarParser
             File.Delete("log.html");
             index = 0;
             count = 0;
+            num = 0;
             do
             {
-                try
-                {
-                    HttpWebRequest request = HttpWebRequest.CreateHttp(GetRequest(index, textBoxRequest.Text));
-                    request.Credentials = CredentialCache.DefaultCredentials;
-                    //request.UserAgent = i.ToString();
-                    request.ContentType = @"text/html; charset=windows-1251";
-                    request.Headers.Add(HttpRequestHeader.AcceptLanguage, @"ru-RU,ru;q=0.9,en;q=0.8");
-                    WebResponse response = request.GetResponse();
-                    toolStripStatusLabelResponse.Text = "Success";
-
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream, Encoding.Default);
-                    string responseFromServer = reader.ReadToEnd();
-                    File.WriteAllText("log.html", responseFromServer, Encoding.Default);
-                    
-                    ParseHtmlDocument(responseFromServer);
-                }
-                catch (WebException ex)
-                {
-                    toolStripStatusLabelResponse.Text = "Error";
-
-                    Stream dataStream = ex.Response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream, Encoding.Default);
-                    string responseFromServer = reader.ReadToEnd();
-                    GetCaptchaImage(responseFromServer);
-                    File.WriteAllText("log.html", responseFromServer, Encoding.Default);
-                }
+                GetRequest(GetStringGoogleRequest(index, textBoxRequest.Text));
                 index++;
+                toolStripStatusLabelResponse.Text = index.ToString() + "/" + num.ToString();
                 count--;
             }
-            while((count > 0 && checkBoxCount.Checked) || (count > 0 && index < numericUpDownCount.Value && !checkBoxCount.Checked));
+            while ((count > 0 && checkBoxCount.Checked && !isError) || (count > 0 && index < numericUpDownCount.Value && !checkBoxCount.Checked && !isError));
+            if (isError)
+            {
+                toolStripStatusLabelResponse.Text = "Error - " + index.ToString() + "/" + num.ToString();
+            }
+            else
+            {
+                toolStripStatusLabelResponse.Text = "Success - " + index.ToString() + "/" + num.ToString();
+            }
         }
 
-        private void ParseHtmlDocument(string input)
+        private void ParseGoogleDocument(string input)
         {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(input);
@@ -134,7 +119,6 @@ namespace GoogleScholarParser
                     data[i] = dataResults.GetData(bodyNodeDatas[i].InnerText);
                 }
                 SaveData(names, data);
-                WriteData(names, data);
             }
             catch
             {
@@ -152,44 +136,48 @@ namespace GoogleScholarParser
                 HtmlNode bodyNode = doc.DocumentNode.SelectSingleNode("//img");
                 CaptchaForm captchaForm = new CaptchaForm(url + bodyNode.Attributes["src"].Value);
                 captchaForm.ShowDialog();
-                captcha = GetRequest(index, textBoxRequest.Text) + "&captcha=" + captchaForm.Captcha + "&submit=Отправить";
+                captcha = GetStringGoogleRequest(index, textBoxRequest.Text) + "&captcha=" + captchaForm.Captcha + "&submit=Отправить";
+                GetRequest(captcha);
             }
             catch
             {
                 File.WriteAllText("log.html", input, Encoding.Default);
             }
-            ParseCaptchaDocument(captcha);
         }
 
-        private void ParseCaptchaDocument(string input)
+        private void GetRequest(string input)
         {
             try
             {
                 HttpWebRequest request = HttpWebRequest.CreateHttp(input);
                 request.Credentials = CredentialCache.DefaultCredentials;
-                //request.UserAgent = i.ToString();
                 request.ContentType = @"text/html; charset=windows-1251";
+                //request.Proxy = new WebProxy("190.78.79.27:8080");
+
                 request.Headers.Add(HttpRequestHeader.AcceptLanguage, @"ru-RU,ru;q=0.9,en;q=0.8");
                 WebResponse response = request.GetResponse();
-                toolStripStatusLabelResponse.Text = "Success";
 
                 Stream dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream, Encoding.Default);
                 string responseFromServer = reader.ReadToEnd();
                 File.WriteAllText("log.html", responseFromServer, Encoding.Default);
-                ParseHtmlDocument(responseFromServer);
+
+                ParseGoogleDocument(responseFromServer);
             }
             catch (WebException ex)
             {
-                toolStripStatusLabelResponse.Text = "Wrong Captcha";
+                toolStripStatusLabelResponse.Text = "Error";
+                isError = true;
                 Stream dataStream = ex.Response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream, Encoding.Default);
                 string responseFromServer = reader.ReadToEnd();
                 File.WriteAllText("log.html", responseFromServer, Encoding.Default);
+
+                GetCaptchaImage(responseFromServer);
             }
         }
 
-        private string GetRequest(int numb, string input)
+        private string GetStringGoogleRequest(int numb, string input)
         {
             string[] arr = input.Split(' ');
             string req = "";
@@ -199,13 +187,13 @@ namespace GoogleScholarParser
                 req += "+";
             }
             req = req.Remove(req.Length - 1);
-            return url + "/scholar?start=" + (numb * 10).ToString() + "&q=" + req + "&btnG";
+            return url + "/scholar?start=" + (numb * 10).ToString() + "&q=" + req + "&btnG=";
         }
 
         private void SaveData(string[] names, Data[] data)
         {
-            string conStr = "server=" + ConfigurationManager.AppSettings["server"] + ";user=" + 
-                                        ConfigurationManager.AppSettings["user"] + ";database=" + 
+            string conStr = "server=" + ConfigurationManager.AppSettings["server"] + ";user=" +
+                                        ConfigurationManager.AppSettings["user"] + ";database=" +
                                         ConfigurationManager.AppSettings["database"] + ";password=" +
                                         ConfigurationManager.AppSettings["password"] + ";";
             using (MySqlConnection con = new MySqlConnection(conStr))
@@ -216,6 +204,8 @@ namespace GoogleScholarParser
 
                     for (int i = 0; i < names.Length; i++)
                     {
+                        File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
+
                         string sqlResults = "INSERT INTO results_table (id, name, autors, year, publishing) VALUES (null, @Name, @Autors, @Year, @Publishing);";
                         MySqlCommand cmdResults = new MySqlCommand(sqlResults, con);
                         //создаем параметры и добавляем их в коллекцию
@@ -230,27 +220,6 @@ namespace GoogleScholarParser
                 {
                     MessageBox.Show(ex.Message);
                 }
-            }
-        }
-
-        private void WriteData(string[] names, Data[] data)
-        {
-            //dataGridViewResults.Visible = true;
-
-            //dataGridViewResults.Columns.Clear();
-            //dataGridViewResults.Columns.Add("Name", "Name");
-            //dataGridViewResults.Columns.Add("Autors", "Autors");
-            //dataGridViewResults.Columns.Add("Year", "Year");
-            //dataGridViewResults.Columns.Add("Publishing", "Publishing");
-            for (int i = 0; i < names.Length; i++)
-            {
-                File.AppendAllText("log.txt", names[i] + "\n" + data[i].autors + "\n" + data[i].year + "\n" + data[i].publishing + "\n\n");
-
-                //dataGridViewResults.Rows.Add();
-                //dataGridViewResults.Rows[i].Cells[0].Value = names[i];
-                //dataGridViewResults.Rows[i].Cells[1].Value = data[i].autors;
-                //dataGridViewResults.Rows[i].Cells[2].Value = data[i].year;
-                //dataGridViewResults.Rows[i].Cells[3].Value = data[i].publishing;
             }
         }
     }

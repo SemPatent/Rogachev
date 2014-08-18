@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace GoogleScholarParser
 {
-    public struct Data 
+    public struct Data
     {
         public string autors;
         public string year;
@@ -26,7 +26,7 @@ namespace GoogleScholarParser
             Data data = new Data();
             data.autors = Autors(ref input);
             data.year = Year(ref input);
-            data.publishing = input;
+            data.publishing = Publishing(ref input);
             return data;
         }
 
@@ -52,12 +52,34 @@ namespace GoogleScholarParser
                 Regex reg = new Regex(@"[А-Я]{1,2}[ ][А-Я][а-я]+|[A-Z]{1,2}[ ][A-Z][a-z]+");
                 MatchCollection matches = reg.Matches(input);
                 string match = "";
-                for(int i=0; i < matches.Count; i++)
+                for (int i = 0; i < matches.Count; i++)
                 {
                     input = input.Replace(matches[i].Value, "");
                     match += matches[i].Value + ", ";
                 }
                 return match.Remove(match.Length - 1);
+            }
+            return "-";
+        }
+
+        private string Publishing(ref string input)
+        {
+            if (!String.IsNullOrEmpty(input))
+            {
+                bool begin = true;
+                string output = input;
+                for (int i = 0; i < input.Length && begin == true; i++)
+                {
+                    if (!Char.IsLetterOrDigit(input[i]))
+                    {
+                        output = output.Remove(0, 1);
+                    }
+                    else
+                    {
+                        begin = false;
+                    }
+                }
+                return output;
             }
             return "-";
         }
