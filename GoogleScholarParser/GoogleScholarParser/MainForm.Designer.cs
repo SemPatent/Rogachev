@@ -29,14 +29,18 @@
         private void InitializeComponent()
         {
             this.textBoxRequest = new System.Windows.Forms.TextBox();
-            this.buttonFind = new System.Windows.Forms.Button();
+            this.buttonStart = new System.Windows.Forms.Button();
             this.statusStripResponse = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelResponse = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelProxy = new System.Windows.Forms.ToolStripStatusLabel();
             this.numericUpDownCount = new System.Windows.Forms.NumericUpDown();
             this.labelCount = new System.Windows.Forms.Label();
             this.checkBoxCount = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItemDatabaseSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemData = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOpenRequests = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripResponse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -50,20 +54,21 @@
             this.textBoxRequest.TabIndex = 0;
             this.textBoxRequest.Text = "Сварка взрывом";
             // 
-            // buttonFind
+            // buttonStart
             // 
-            this.buttonFind.Location = new System.Drawing.Point(603, 25);
-            this.buttonFind.Name = "buttonFind";
-            this.buttonFind.Size = new System.Drawing.Size(75, 23);
-            this.buttonFind.TabIndex = 1;
-            this.buttonFind.Text = "Find";
-            this.buttonFind.UseVisualStyleBackColor = true;
-            this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
+            this.buttonStart.Location = new System.Drawing.Point(603, 25);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(75, 23);
+            this.buttonStart.TabIndex = 1;
+            this.buttonStart.Text = "Start";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // statusStripResponse
             // 
             this.statusStripResponse.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelResponse});
+            this.toolStripStatusLabelResponse,
+            this.toolStripStatusLabelProxy});
             this.statusStripResponse.Location = new System.Drawing.Point(0, 240);
             this.statusStripResponse.Name = "statusStripResponse";
             this.statusStripResponse.Size = new System.Drawing.Size(691, 22);
@@ -73,8 +78,14 @@
             // toolStripStatusLabelResponse
             // 
             this.toolStripStatusLabelResponse.Name = "toolStripStatusLabelResponse";
-            this.toolStripStatusLabelResponse.Size = new System.Drawing.Size(31, 17);
-            this.toolStripStatusLabelResponse.Text = "Start";
+            this.toolStripStatusLabelResponse.Size = new System.Drawing.Size(50, 17);
+            this.toolStripStatusLabelResponse.Text = "Loading";
+            // 
+            // toolStripStatusLabelProxy
+            // 
+            this.toolStripStatusLabelProxy.Name = "toolStripStatusLabelProxy";
+            this.toolStripStatusLabelProxy.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabelProxy.Text = "0";
             // 
             // numericUpDownCount
             // 
@@ -111,19 +122,43 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemDatabaseSettings});
+            this.toolStripMenuItemData,
+            this.toolStripMenuItemSettings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(691, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // toolStripMenuItemDatabaseSettings
+            // toolStripMenuItemData
             // 
-            this.toolStripMenuItemDatabaseSettings.Name = "toolStripMenuItemDatabaseSettings";
-            this.toolStripMenuItemDatabaseSettings.Size = new System.Drawing.Size(112, 20);
-            this.toolStripMenuItemDatabaseSettings.Text = "Database Settings";
-            this.toolStripMenuItemDatabaseSettings.Click += new System.EventHandler(this.toolStripMenuItemDatabaseSettings_Click);
+            this.toolStripMenuItemData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadCSVToolStripMenuItem,
+            this.toolStripMenuItemOpenRequests});
+            this.toolStripMenuItemData.Name = "toolStripMenuItemData";
+            this.toolStripMenuItemData.Size = new System.Drawing.Size(43, 20);
+            this.toolStripMenuItemData.Text = "Data";
+            // 
+            // loadCSVToolStripMenuItem
+            // 
+            this.loadCSVToolStripMenuItem.Name = "loadCSVToolStripMenuItem";
+            this.loadCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.loadCSVToolStripMenuItem.Text = "Load CSV";
+            this.loadCSVToolStripMenuItem.Click += new System.EventHandler(this.loadCSVToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItemSettings
+            // 
+            this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
+            this.toolStripMenuItemSettings.Size = new System.Drawing.Size(61, 20);
+            this.toolStripMenuItemSettings.Text = "Settings";
+            this.toolStripMenuItemSettings.Click += new System.EventHandler(this.toolStripMenuItemSettings_Click);
+            // 
+            // toolStripMenuItemOpenRequests
+            // 
+            this.toolStripMenuItemOpenRequests.Name = "toolStripMenuItemOpenRequests";
+            this.toolStripMenuItemOpenRequests.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItemOpenRequests.Text = "Open Requests";
+            this.toolStripMenuItemOpenRequests.Click += new System.EventHandler(this.toolStripMenuItemOpenRequests_Click);
             // 
             // MainForm
             // 
@@ -135,7 +170,7 @@
             this.Controls.Add(this.numericUpDownCount);
             this.Controls.Add(this.statusStripResponse);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.buttonFind);
+            this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.textBoxRequest);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -153,13 +188,17 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBoxRequest;
-        private System.Windows.Forms.Button buttonFind;
+        private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.StatusStrip statusStripResponse;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelResponse;
         private System.Windows.Forms.NumericUpDown numericUpDownCount;
         private System.Windows.Forms.Label labelCount;
         private System.Windows.Forms.CheckBox checkBoxCount;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDatabaseSettings;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemData;
+        private System.Windows.Forms.ToolStripMenuItem loadCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelProxy;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSettings;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenRequests;
     }
 }

@@ -7,11 +7,15 @@ using System.Text.RegularExpressions;
 
 namespace GoogleScholarParser
 {
-    public struct Data
+    public struct DataString
     {
-        public string autors;
-        public string year;
-        public string publishing;
+        public string owners;
+        public string university;
+        public string journal;
+        public string volume_journal;
+        public string num_journal;
+        public int year;
+        public string pages;
     }
 
     class DataResults
@@ -21,16 +25,21 @@ namespace GoogleScholarParser
 
         }
 
-        public Data GetData(string input)
+        public DataString GetData(string input)
         {
-            Data data = new Data();
-            data.autors = Autors(ref input);
+            DataString data = new DataString();
+            data.owners = Owners(ref input);
             data.year = Year(ref input);
-            data.publishing = Publishing(ref input);
+            data.university = University(input);
+
+            data.journal = "-";
+            data.volume_journal = "-";
+            data.num_journal = "-";
+            data.pages = "-";
             return data;
         }
 
-        private string Year(ref string input)
+        private int Year(ref string input)
         {
             if (!String.IsNullOrEmpty(input))
             {
@@ -39,13 +48,13 @@ namespace GoogleScholarParser
                 if (match.Success)
                 {
                     input = input.Replace(match.Value, "");
-                    return match.Value;
+                    return int.Parse(match.Value);
                 }
             }
-            return "-";
+            return 0;
         }
 
-        private string Autors(ref string input)
+        private string Owners(ref string input)
         {
             if (!String.IsNullOrEmpty(input))
             {
@@ -57,17 +66,25 @@ namespace GoogleScholarParser
                     input = input.Replace(matches[i].Value, "");
                     match += matches[i].Value + ", ";
                 }
-                return match.Remove(match.Length - 1);
+                if (match.Length == 0)
+                {
+                    return "-";
+                }
+                else
+                {
+                    return match.Remove(match.Length - 1);
+                }
             }
             return "-";
         }
 
-        private string Publishing(ref string input)
+        private string University(string input)
         {
             if (!String.IsNullOrEmpty(input))
             {
+                
                 bool begin = true;
-                string output = input;
+                string output = DeleteShit(input);
                 for (int i = 0; i < input.Length && begin == true; i++)
                 {
                     if (!Char.IsLetterOrDigit(input[i]))
@@ -82,6 +99,17 @@ namespace GoogleScholarParser
                 return output;
             }
             return "-";
+        }
+
+        public string DeleteShit(string input)
+        {
+            input = input.Replace("&quot;", " ");
+            input = input.Replace("&laquo;", " ");
+            input = input.Replace("&raquo;", " ");
+            input = input.Replace("&amp;", " ");
+            input = input.Replace("&hellip;", " ");
+            input = input.Replace(";", " ");
+            return input;
         }
     }
 }

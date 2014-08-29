@@ -45,3 +45,7 @@ D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser_1\GoogleScholarParser\ob
 D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser_1\GoogleScholarParser\obj\Debug\GoogleScholarParser.MainForm.resources
 D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser_1\GoogleScholarParser\obj\Debug\GoogleScholarParser.Properties.Resources.resources
 D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser_1\GoogleScholarParser\obj\Debug\GoogleScholarParser.csproj.GenerateResource.Cache
+D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\bin\Debug\Npgsql.dll
+D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\Interop.Office.dll
+D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\Interop.VBIDE.dll
+D:\Git\Rogachev_GoogleScholarParser\GoogleScholarParser\GoogleScholarParser\obj\Debug\GoogleScholarParser.csproj.ResolveComReference.cache

@@ -38,6 +38,9 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelTable = new System.Windows.Forms.Label();
+            this.textBoxTable = new System.Windows.Forms.TextBox();
+            this.checkBoxProxy = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelServer
@@ -70,7 +73,7 @@
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(12, 93);
+            this.labelPassword.Location = new System.Drawing.Point(12, 119);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(53, 13);
             this.labelPassword.TabIndex = 3;
@@ -99,14 +102,14 @@
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(80, 90);
+            this.textBoxPassword.Location = new System.Drawing.Point(80, 116);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(156, 20);
             this.textBoxPassword.TabIndex = 7;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(161, 122);
+            this.buttonSave.Location = new System.Drawing.Point(161, 165);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 8;
@@ -116,7 +119,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(80, 122);
+            this.buttonCancel.Location = new System.Drawing.Point(80, 165);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 9;
@@ -124,11 +127,40 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // labelTable
+            // 
+            this.labelTable.AutoSize = true;
+            this.labelTable.Location = new System.Drawing.Point(12, 93);
+            this.labelTable.Name = "labelTable";
+            this.labelTable.Size = new System.Drawing.Size(34, 13);
+            this.labelTable.TabIndex = 10;
+            this.labelTable.Text = "Table";
+            // 
+            // textBoxTable
+            // 
+            this.textBoxTable.Location = new System.Drawing.Point(80, 90);
+            this.textBoxTable.Name = "textBoxTable";
+            this.textBoxTable.Size = new System.Drawing.Size(156, 20);
+            this.textBoxTable.TabIndex = 11;
+            // 
+            // checkBoxProxy
+            // 
+            this.checkBoxProxy.AutoSize = true;
+            this.checkBoxProxy.Location = new System.Drawing.Point(184, 142);
+            this.checkBoxProxy.Name = "checkBoxProxy";
+            this.checkBoxProxy.Size = new System.Drawing.Size(52, 17);
+            this.checkBoxProxy.TabIndex = 13;
+            this.checkBoxProxy.Text = "Proxy";
+            this.checkBoxProxy.UseVisualStyleBackColor = true;
+            // 
             // DatabaseSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 157);
+            this.ClientSize = new System.Drawing.Size(248, 199);
+            this.Controls.Add(this.checkBoxProxy);
+            this.Controls.Add(this.textBoxTable);
+            this.Controls.Add(this.labelTable);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.textBoxPassword);
@@ -159,5 +191,8 @@
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelTable;
+        private System.Windows.Forms.TextBox textBoxTable;
+        private System.Windows.Forms.CheckBox checkBoxProxy;
     }
 }
